@@ -1,12 +1,18 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from '@redux';
+import AppNavigation from 'navigation';
+import { createAppContainer } from 'react-navigation';
+const AppContainer = createAppContainer(AppNavigation);
 
-import ReduxNavigation from 'navigation/ReduxNavigation';
+function ReduxNavigation (props) {
+  return <AppContainer />
+}
 
-
+const mapStateToProps = state => ({ state: state })
+let AppReduxNavigation = connect(mapStateToProps)(ReduxNavigation)
 const store = createStore(rootReducer);
 
 export default class App extends React.Component{
@@ -18,7 +24,7 @@ export default class App extends React.Component{
             flex: 1,
             backgroundColor: '#ffffff'
           }}>
-          <ReduxNavigation />
+          <AppReduxNavigation />
         </View>
       </Provider>
     );
